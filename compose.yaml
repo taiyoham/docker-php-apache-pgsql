@@ -1,0 +1,19 @@
+services:
+  db:
+    image:  postgres:14.2
+    environment:
+      POSTGRES_DB: testdb
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  php:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+volumes:
+  db-data:
